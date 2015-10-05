@@ -7,4 +7,4 @@ TARBALL_MD5=8a72612ec92d3a26731c74fa5a53bda3
 PACKAGES_EXT=""
 
 OW_FILES=(_common_ _${OW_DEVICE_TYPE}_ wndr3700v4)
-OW_REPOSITORIES=("src/gz myrepo http://macross/openwrt/${OW_ARCH}")
+OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}")
