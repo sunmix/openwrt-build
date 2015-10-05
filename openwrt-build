@@ -1,0 +1,100 @@
+#!/bin/bash
+# exit on error
+set -e
+# Start point
+openwrt_dir="$( cd `dirname "${BASH_SOURCE[0]}"` && pwd )"
+spec_dir="${openwrt_dir}/specs"
+
+# Utilities
+function print_usage() {
+  echo -e "Usage:\n    $(basename "${BASH_SOURCE[0]}") <spec>"
+  echo "Note: <spec> SHOULD be defined in specs folder."
+  [ -d ${spec_dir} ] && echo "Current specs := $(cd "${spec_dir}"; echo *)"
+}
+function md5cmd() {
+  cmd=md5sum
+  which md5 >/dev/null && cmd="md5 -q"
+  $cmd "$1" | cut -d' ' -f1
+}
+
+# Load openwrt
+source "${openwrt_dir}/openwrt"
+
+# Load spec
+[ $# -eq '0' ] && { print_usage; exit 1; }
+spec=$1
+spec_file="${openwrt_dir}/specs/${spec}"
+echo "Load ${spec_file} ..."
+source ${spec_file} || { print_usage; exit 1; }
+
+# Check spec
+num=0
+for x in OW_ARCH OW_FILES TARBALL_MD5 OW_PROFILE OW_SUBARCH; do
+  [ "a" == "a${!x}" ] && { echo $x has NO value!; num=$(( $num + 1 )); }
+done
+[ $num -gt '0' ] && exit 1
+
+#
+build_dir="${openwrt_dir}/build"
+build_spec_dir="${build_dir}/${spec}"
+bin_dir="${build_dir}/dl_${OW_ARCH}"
+packages_var="PACKAGES_${OW_DEVICE_TYPE}"
+packages=`echo ${!packages_var}`" "`echo ${PACKAGES_EXT}`
+openwrt_url="https://downloads.openwrt.org/${codename}/${version}/${OW_ARCH}/${OW_SUBARCH}"
+TARBALL=OpenWrt-ImageBuilder-${version}-${OW_ARCH}-${OW_SUBARCH}.Linux-x86_64.tar.bz2
+TARBALL_DIR=${TARBALL%.tar.bz2}
+TARBALL_URL="${openwrt_url}/${TARBALL}"
+
+# Prepare building
+mkdir -p "${build_dir}"
+cd "${build_dir}"
+
+# Download & unarchive Image Builder
+if [ ! -f "${TARBALL}" ] || [ "${TARBALL_MD5}" != "$( md5cmd ${TARBALL} )" ]; then
+  # Remove old files
+  [ -e ${build_spec_dir} ] && rm -rf ${build_spec_dir}
+  [ -f ${TARBALL} ] && rm ${TARBALL}
+  # Download
+  echo "Downloading ${TARBALL_URL} ..."
+  curl -# -O ${TARBALL_URL} || exit 1
+  [ "${TARBALL_MD5}" != "$( md5cmd ${TARBALL} )" ] && { echo "MD5 NOT matches!"; exit 1; }
+fi
+
+# Unarchive
+if [ ! -e ${build_spec_dir} ]; then
+  [ -e ${TARBALL_DIR} ] && rm -rf ${TARBALL_DIR}
+  echo "Unarchive ${TARBALL} ..."
+  tar xjf ${TARBALL} && mv ${TARBALL_DIR} ${build_spec_dir}
+fi
+
+#
+cd ${build_spec_dir}
+# Clean up
+rm -rf dl
+rm -rf files
+
+# dl -> ../dl
+mkdir -p "${bin_dir}"
+ln -s "${bin_dir}" dl
+
+# repositories.conf
+echo "Generate repositories.conf ..."
+mv repositories.conf repositories.conf.bak
+for repo in "${OW_REPOSITORIES[@]}"; do
+  echo ${repo} >> repositories.conf
+done
+for repo in base luci packages routing telephony management; do
+  echo "src/gz ${codename}_${repo} ${openwrt_url}/packages/${repo}" >> repositories.conf
+done
+echo "src imagebuilder file:packages" >> repositories.conf
+
+# files
+echo "Copy files ..."
+mkdir -p files
+for x in "${OW_FILES[@]}"; do
+  cp -f -R -v "${openwrt_dir}/files/$x"/* files/
+done
+
+# make image
+echo "Generate images ..."
+make image PROFILE=${OW_PROFILE} FILES=files PACKAGES="${packages}"

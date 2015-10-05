@@ -1,0 +1,10 @@
+OW_ARCH=brcm2708
+OW_SUBARCH=bcm2709
+OW_DEVICE_TYPE=router
+OW_PROFILE=RaspberryPi2
+
+TARBALL_MD5=9babd2af09761e2ce4d580eed0e1ebb4
+PACKAGES_EXT="kmod-carl9170 kmod-usb-net-asix kmod-usb-net-cdc-ether kmod-usb-net-mcs7830"
+
+OW_FILES=(_common_ _${OW_DEVICE_TYPE}_ pi2)
+OW_REPOSITORIES=("src/gz myrepo http://macross/openwrt/${OW_ARCH}")
