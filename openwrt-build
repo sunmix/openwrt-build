@@ -37,7 +37,7 @@ done
 #
 build_dir="${openwrt_dir}/build"
 build_spec_dir="${build_dir}/${spec}"
-bin_dir="${build_dir}/dl_${OW_ARCH}"
+bin_dir="${build_dir}/dl_${OW_ARCH}_${OW_SUBARCH}"
 packages_var="PACKAGES_${OW_DEVICE_TYPE}"
 packages=`echo ${!packages_var}`" "`echo ${PACKAGES_EXT}`
 openwrt_url="https://downloads.openwrt.org/${codename}/${version}/${OW_ARCH}/${OW_SUBARCH}"
