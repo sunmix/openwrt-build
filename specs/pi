@@ -4,7 +4,14 @@ OW_DEVICE_TYPE=router
 OW_PROFILE=RaspberryPi
 
 TARBALL_MD5=3f248099cbab83e9723a99a71453003d
-PACKAGES_EXT="kmod-carl9170 kmod-usb-net-asix kmod-usb-net-cdc-ether kmod-usb-net-mcs7830"
+PACKAGES_EXT=" \
+kmod-carl9170 \
+kmod-usb-net-asix \
+kmod-usb-net-cdc-ether \
+kmod-usb-net-mcs7830 \
+aria2 \
+htop \
+"
 
 OW_FILES=(_common_ _${OW_DEVICE_TYPE}_ pi)
 OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}")
