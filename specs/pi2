@@ -13,5 +13,5 @@ aria2 \
 htop \
 "
 
-OW_FILES=(_common_ _${OW_DEVICE_TYPE}_ pi2)
+OW_FILES=(_common_ _${OW_DEVICE_TYPE}_ _gfw_ pi2)
 OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}")
