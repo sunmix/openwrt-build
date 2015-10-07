@@ -4,6 +4,16 @@ OW_DEVICE_TYPE=router
 OW_PROFILE=WNDR4300
 
 TARBALL_MD5=8a72612ec92d3a26731c74fa5a53bda3
-PACKAGES_EXT="-6in4 -ipip -ipset -iptables-mod-filter -iptables-mod-tproxy -iptables-mod-u32 -luci-app-ddns -luci-app-qos -shadowsocks-libev"
+PACKAGES_EXT=" \
+-6in4 \
+-ipip \
+-ipset \
+-iptables-mod-filter \
+-iptables-mod-tproxy \
+-iptables-mod-u32 \
+-luci-app-ddns \
+-luci-app-qos \
+-shadowsocks-libev \
+"
 
 OW_FILES=(_common_ _${OW_DEVICE_TYPE}_ wndr3700v4_lite)
