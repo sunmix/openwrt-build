@@ -11,6 +11,7 @@ kmod-usb-net-cdc-ether \
 kmod-usb-net-mcs7830 \
 aria2 \
 htop \
+unbound \
 "
 
 OW_FILES=(_common_ _${OW_DEVICE_TYPE}_ _gfw_ pi2)
