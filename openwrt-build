@@ -38,12 +38,18 @@ done
 build_dir="${openwrt_dir}/build"
 build_spec_dir="${build_dir}/${spec}"
 bin_dir="${build_dir}/dl_${OW_ARCH}_${OW_SUBARCH}"
-packages_var="PACKAGES_${OW_DEVICE_TYPE}"
-packages=`echo ${!packages_var}`" "`echo ${PACKAGES_EXT}`
 openwrt_url="https://downloads.openwrt.org/${codename}/${version}/${OW_ARCH}/${OW_SUBARCH}"
 TARBALL=OpenWrt-ImageBuilder-${version}-${OW_ARCH}-${OW_SUBARCH}.Linux-x86_64.tar.bz2
 TARBALL_DIR=${TARBALL%.tar.bz2}
 TARBALL_URL="${openwrt_url}/${TARBALL}"
+
+# PACKAGES
+packages=""
+for pkg in "${PACKAGES[@]}"; do
+	pkg_var=PACKAGES_${pkg}
+	packages="${packages} "`echo ${!pkg_var}`
+done
+packages="${packages} "`echo ${PACKAGES_EXT}`
 
 # Prepare building
 mkdir -p "${build_dir}"
@@ -83,7 +89,7 @@ mv repositories.conf repositories.conf.bak
 for repo in "${OW_REPOSITORIES[@]}"; do
   echo ${repo} >> repositories.conf
 done
-for repo in base luci packages routing telephony management; do
+for repo in "base" "luci" "packages" "routing" "telephony" "management"; do
   echo "src/gz ${codename}_${repo} ${openwrt_url}/packages/${repo}" >> repositories.conf
 done
 echo "src imagebuilder file:packages" >> repositories.conf

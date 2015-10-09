@@ -1,10 +1,10 @@
 OW_ARCH=ar71xx
 OW_SUBARCH=nand
-OW_DEVICE_TYPE=router
 OW_PROFILE=WNDR4300
 
 TARBALL_MD5=8a72612ec92d3a26731c74fa5a53bda3
+PACKAGES=(base router gfw)
 PACKAGES_EXT=""
 
-OW_FILES=(_common_ _${OW_DEVICE_TYPE}_ _gfw_ wndr3700v4)
+OW_FILES=(_common_ _router_ _gfw_ wndr3700v4)
 OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}")
