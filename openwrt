@@ -33,9 +33,7 @@ ipset
 iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
-shadowsocks-libev
-unbound 
-unbound-host 
+shadowsocks-libev 
 "
 
 PACKAGES_util="
