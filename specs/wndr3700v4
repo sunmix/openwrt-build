@@ -7,4 +7,4 @@ PACKAGES=(base router gfw)
 PACKAGES_EXT=""
 
 OW_FILES=(_common_ _router_ _gfw_ wndr3700v4)
-OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}")
+OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")

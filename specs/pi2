@@ -7,4 +7,4 @@ PACKAGES=(base router gfw usbnet util)
 PACKAGES_EXT=""
 
 OW_FILES=(_common_ _router_ _gfw_ pi2)
-OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}")
+OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")
