@@ -26,7 +26,6 @@ fdisk
 git
 kmod-8139cp
 kmod-8139too
-kmod-acpi-button
 kmod-ata-ahci
 kmod-button-hotplug
 kmod-fs-btrfs
