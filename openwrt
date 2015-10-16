@@ -18,6 +18,14 @@ PACKAGES_nas="
 bash
 block-mount
 btrfs-progs
+collectd-mod-cpu
+collectd-mod-df
+collectd-mod-disk
+collectd-mod-load
+collectd-mod-memory
+collectd-mod-processes
+collectd-mod-thermal
+collectd-mod-uptime
 coreutils-sha1sum
 coreutils-sha256sum
 coreutils-sha512sum
