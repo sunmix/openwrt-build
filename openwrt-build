@@ -103,7 +103,4 @@ done
 
 # make image
 echo "Generate images ..."
-flags="FILES=files"
-[ "a" != "a${OW_PROFILE}" ] && flags=${flags}" PROFILE=${OW_PROFILE}"
-[ "a" != "a${packages}" ] && flags=${flags}" PACKAGES=\'${packages}\'"
-make image ${flags}
+eval make image FILES=files ${OW_PROFILE:+"PROFILE=${OW_PROFILE}"} ${packages:+"PACKAGES=\"${packages}\""}
