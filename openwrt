@@ -14,8 +14,13 @@ sudo
 PACKAGES_nas="
 block-mount
 e2fsprogs
+git
 kmod-fs-ext4
 kmod-usb-storage
+luci-app-minidlna
+luci-app-samba
+luci-app-transmission
+rsyncd
 usbutils
 "
 

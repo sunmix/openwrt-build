@@ -29,7 +29,7 @@ source ${spec_file} || { print_usage; exit 1; }
 
 # Check spec
 num=0
-for x in OW_ARCH OW_FILES TARBALL_MD5 OW_PROFILE OW_SUBARCH; do
+for x in OW_ARCH OW_FILES TARBALL_MD5 OW_SUBARCH; do
   [ "a" == "a${!x}" ] && { echo $x has NO value!; num=$(( $num + 1 )); }
 done
 [ $num -gt '0' ] && exit 1
@@ -103,4 +103,7 @@ done
 
 # make image
 echo "Generate images ..."
-make image PROFILE=${OW_PROFILE} FILES=files PACKAGES="${packages}"
+flags="FILES=files"
+[ "a" != "a${OW_PROFILE}" ] && flags=${flags}" PROFILE=${OW_PROFILE}"
+[ "a" != "a${packages}" ] && flags=${flags}" PACKAGES=\'${packages}\'"
+make image ${flags}
