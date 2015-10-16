@@ -68,15 +68,18 @@ iptables-mod-u32
 shadowsocks-libev
 "
 
+PACKAGES_usbnet="
+kmod-usb-net-asix
+kmod-usb-net-cdc-ether
+kmod-usb-net-mcs7830
+"
+
+PACKAGES_usbwifi="
+kmod-carl9170
+"
+
 PACKAGES_util="
 aria2
 htop
 wget
-"
-
-PACKAGES_usbnet="
-kmod-carl9170
-kmod-usb-net-asix
-kmod-usb-net-cdc-ether
-kmod-usb-net-mcs7830
 "
