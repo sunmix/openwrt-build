@@ -12,16 +12,37 @@ sudo
 "
 
 PACKAGES_nas="
+-luci-proto-ppp
+-ppp
+bash
 block-mount
+btrfs-progs
+coreutils-sha1sum
+coreutils-sha256sum
+coreutils-sha512sum
 e2fsprogs
+fdisk
 git
+kmod-8139cp
+kmod-8139too
+kmod-ata-ahci
+kmod-fs-btrfs
 kmod-fs-ext4
+kmod-fs-vfat
+kmod-gpio-button-hotplug
+kmod-input-evdev
+kmod-nls-utf8
+kmod-usb-ohci
 kmod-usb-storage
+kmod-usb-uhci
+kmod-usb3
 luci-app-minidlna
 luci-app-samba
+luci-app-statistics
 luci-app-transmission
 rsyncd
 usbutils
+vim
 "
 
 PACKAGES_router="
@@ -40,17 +61,18 @@ ipset
 iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
-shadowsocks-libev 
+shadowsocks-libev
 "
 
 PACKAGES_util="
-aria2 
-htop 
+aria2
+htop
+wget
 "
 
 PACKAGES_usbnet="
-kmod-carl9170 
-kmod-usb-net-asix 
-kmod-usb-net-cdc-ether 
-kmod-usb-net-mcs7830 
+kmod-carl9170
+kmod-usb-net-asix
+kmod-usb-net-cdc-ether
+kmod-usb-net-mcs7830
 "
