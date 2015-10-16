@@ -12,7 +12,7 @@ sudo
 "
 
 PACKAGES_nas="
--luci-proto-ppp
+-odhcpd
 -ppp
 -ppp-mod-pppoe
 bash
