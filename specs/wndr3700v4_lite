@@ -20,4 +20,4 @@ kmod-leds-wndr3700-usb
 usbutils
 "
 
-OW_FILES=(_common_ _router_ wndr3700v4_lite)
+OW_FILES=(_common_ _router_ _gfw_ wndr3700v4_lite)
