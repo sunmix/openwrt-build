@@ -17,8 +17,9 @@ function md5cmd() {
   $cmd "$1" | cut -d' ' -f1
 }
 
-# Load openwrt
+# Load openwrt & packages
 source "${openwrt_dir}/openwrt"
+source "${openwrt_dir}/packages"
 
 # Load spec
 [ $# -eq '0' ] && { print_usage; exit 1; }
