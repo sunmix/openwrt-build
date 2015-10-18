@@ -30,7 +30,7 @@ source ${spec_file} || { print_usage; exit 1; }
 
 # Check spec
 num=0
-for x in OW_ARCH OW_FILES TARBALL_MD5 OW_SUBARCH; do
+for x in OW_ARCH IMAGEBUILDER_MD5 OW_SUBARCH; do
   [ "a" == "a${!x}" ] && { echo $x has NO value!; num=$(( $num + 1 )); }
 done
 [ $num -gt '0' ] && exit 1
@@ -40,9 +40,9 @@ build_dir="${openwrt_dir}/build"
 build_spec_dir="${build_dir}/${spec}"
 bin_dir="${build_dir}/dl_${OW_ARCH}_${OW_SUBARCH}"
 openwrt_url="https://downloads.openwrt.org/${codename}/${version}/${OW_ARCH}/${OW_SUBARCH}"
-TARBALL=OpenWrt-ImageBuilder-${version}-${OW_ARCH}-${OW_SUBARCH}.Linux-x86_64.tar.bz2
-TARBALL_DIR=${TARBALL%.tar.bz2}
-TARBALL_URL="${openwrt_url}/${TARBALL}"
+IMAGEBUILDER=OpenWrt-ImageBuilder-${version}-${OW_ARCH}-${OW_SUBARCH}.Linux-x86_64.tar.bz2
+IMAGEBUILDER_DIR=${IMAGEBUILDER%.tar.bz2}
+IMAGEBUILDER_URL="${openwrt_url}/${IMAGEBUILDER}"
 
 # PACKAGES
 packages=""
@@ -57,21 +57,21 @@ mkdir -p "${build_dir}"
 cd "${build_dir}"
 
 # Download & unarchive Image Builder
-if [ ! -f "${TARBALL}" ] || [ "${TARBALL_MD5}" != "$( md5cmd ${TARBALL} )" ]; then
+if [ ! -f "${IMAGEBUILDER}" ] || [ "${IMAGEBUILDER_MD5}" != "$( md5cmd ${IMAGEBUILDER} )" ]; then
   # Remove old files
   [ -e ${build_spec_dir} ] && rm -rf ${build_spec_dir}
-  [ -f ${TARBALL} ] && rm ${TARBALL}
+  [ -f ${IMAGEBUILDER} ] && rm ${IMAGEBUILDER}
   # Download
-  echo "Downloading ${TARBALL_URL} ..."
-  curl -# -O ${TARBALL_URL} || exit 1
-  [ "${TARBALL_MD5}" != "$( md5cmd ${TARBALL} )" ] && { echo "MD5 NOT matches!"; exit 1; }
+  echo "Downloading ${IMAGEBUILDER_URL} ..."
+  curl -# -O ${IMAGEBUILDER_URL} || exit 1
+  [ "${IMAGEBUILDER_MD5}" != "$( md5cmd ${IMAGEBUILDER} )" ] && { echo "MD5 NOT matches!"; exit 1; }
 fi
 
 # Unarchive
 if [ ! -e ${build_spec_dir} ]; then
-  [ -e ${TARBALL_DIR} ] && rm -rf ${TARBALL_DIR}
-  echo "Unarchive ${TARBALL} ..."
-  tar xjf ${TARBALL} && mv ${TARBALL_DIR} ${build_spec_dir}
+  [ -e ${IMAGEBUILDER_DIR} ] && rm -rf ${IMAGEBUILDER_DIR}
+  echo "Unarchive ${IMAGEBUILDER} ..."
+  tar xjf ${IMAGEBUILDER} && mv ${IMAGEBUILDER_DIR} ${build_spec_dir}
 fi
 
 #
