@@ -12,4 +12,4 @@ luci-i18n-firewall-zh-cn
 luci-i18n-qos-zh-cn
 "
 
-OW_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")
+CUSTOM_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")

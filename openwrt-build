@@ -87,7 +87,7 @@ ln -s "${bin_dir}" dl
 # repositories.conf
 echo "Generate repositories.conf ..."
 mv repositories.conf repositories.conf.bak
-for repo in "${OW_REPOSITORIES[@]}"; do
+for repo in "${CUSTOM_REPOSITORIES[@]}"; do
   echo ${repo} >> repositories.conf
 done
 for repo in "base" "luci" "packages" "routing" "telephony" "management"; do
