@@ -12,4 +12,5 @@ luci-i18n-firewall-zh-cn
 luci-i18n-qos-zh-cn
 "
 
+MIRROR_URL="http://openwrt.lan/openwrt/mirror"
 CUSTOM_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")

@@ -90,8 +90,10 @@ mv repositories.conf repositories.conf.bak
 for repo in "${CUSTOM_REPOSITORIES[@]}"; do
   echo ${repo} >> repositories.conf
 done
+
+repo_url="${MIRROR_URL:-https://downloads.openwrt.org}/${codename}/${version}/${OW_ARCH}/${OW_SUBARCH}"
 for repo in "base" "luci" "packages" "routing" "telephony" "management"; do
-  echo "src/gz ${codename}_${repo} ${openwrt_url}/packages/${repo}" >> repositories.conf
+  echo "src/gz ${codename}_${repo} ${repo_url}/packages/${repo}" >> repositories.conf
 done
 echo "src imagebuilder file:packages" >> repositories.conf
 
