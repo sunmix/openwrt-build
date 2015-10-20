@@ -98,7 +98,7 @@ echo "src imagebuilder file:packages" >> repositories.conf
 # files
 echo "Copy files ..."
 mkdir -p files
-for x in "${OW_FILES[@]}"; do
+for x in "${FILES[@]}"; do
   cp -f -R -v "${openwrt_dir}/files/$x"/* files/
 done
 

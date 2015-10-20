@@ -3,7 +3,7 @@ OW_SUBARCH=bcm2708
 OW_PROFILE=RaspberryPi
 IMAGEBUILDER_MD5=3f248099cbab83e9723a99a71453003d
 
-OW_FILES=(_common_ _router_ _gfw_ pi)
+FILES=(_common_ _router_ _gfw_ pi)
 PACKAGES=(base router gfw usbnet usbwifi util)
 PACKAGES_EXT="
 luci-i18n-base-zh-cn
