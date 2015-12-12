@@ -47,10 +47,8 @@ PACKAGES_router="
 6in4
 bind-dig
 dnsmasq-full
-ipip
 luci-app-ddns
 luci-app-firewall
-luci-app-qos
 wpad-mini
 "
 
