@@ -53,6 +53,7 @@ wpad-mini
 "
 
 PACKAGES_gfw="
+chinadns
 ipset
 iptables-mod-filter
 iptables-mod-tproxy
