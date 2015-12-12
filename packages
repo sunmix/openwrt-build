@@ -44,7 +44,6 @@ usbutils
 "
 
 PACKAGES_router="
-6in4
 bind-dig
 dnsmasq-full
 luci-app-ddns
