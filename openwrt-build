@@ -11,9 +11,9 @@ function print_usage() {
   echo "Note: <spec> SHOULD be defined in specs folder."
   [ -d ${spec_dir} ] && echo "Current specs := $(cd "${spec_dir}"; echo *)"
 }
-function md5cmd() {
-  cmd=md5sum
-  which md5 >/dev/null && cmd="md5 -q"
+function check_hash() {
+  cmd=sha256sum
+  which sha256sum >/dev/null && cmd="shasum -a 256"
   $cmd "$1" | cut -d' ' -f1
 }
 
@@ -30,7 +30,7 @@ source ${spec_file} || { print_usage; exit 1; }
 
 # Check spec
 num=0
-for x in OW_ARCH IMAGEBUILDER_MD5 OW_SUBARCH; do
+for x in OW_ARCH IMAGEBUILDER_HASH OW_SUBARCH; do
   [ "a" == "a${!x}" ] && { echo $x has NO value!; num=$(( $num + 1 )); }
 done
 [ $num -gt '0' ] && exit 1
@@ -57,14 +57,14 @@ mkdir -p "${build_dir}"
 cd "${build_dir}"
 
 # Download & unarchive Image Builder
-if [ ! -f "${IMAGEBUILDER}" ] || [ "${IMAGEBUILDER_MD5}" != "$( md5cmd ${IMAGEBUILDER} )" ]; then
+if [ ! -f "${IMAGEBUILDER}" ] || [ "${IMAGEBUILDER_HASH}" != "$( check_hash ${IMAGEBUILDER} )" ]; then
   # Remove old files
   [ -e ${build_spec_dir} ] && rm -rf ${build_spec_dir}
   [ -f ${IMAGEBUILDER} ] && rm ${IMAGEBUILDER}
   # Download
   echo "Downloading ${IMAGEBUILDER_URL} ..."
   curl -# -O ${IMAGEBUILDER_URL} || exit 1
-  [ "${IMAGEBUILDER_MD5}" != "$( md5cmd ${IMAGEBUILDER} )" ] && { echo "MD5 NOT matches!"; exit 1; }
+  [ "${IMAGEBUILDER_HASH}" != "$( check_hash ${IMAGEBUILDER} )" ] && { echo "HASH NOT matches!"; exit 1; }
 fi
 
 # Unarchive

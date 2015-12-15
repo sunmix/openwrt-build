@@ -1,7 +1,7 @@
 OW_ARCH=brcm2708
 OW_SUBARCH=bcm2708
 OW_PROFILE=RaspberryPi
-IMAGEBUILDER_MD5=3f248099cbab83e9723a99a71453003d
+IMAGEBUILDER_HASH=990fb612f5dcae77ab33a0d587aa238dfec079f2028b5ca211eb27aaed91c281
 
 FILES=(_common_ _router_ _gfw_ pi)
 PACKAGES=(base router gfw usbnet usbwifi util)
