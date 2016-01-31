@@ -104,4 +104,4 @@ done
 
 # make image
 echo "Generate images ..."
-eval make image FILES=files ${OW_PROFILE:+"PROFILE=${OW_PROFILE}"} ${packages:+"PACKAGES=\"${packages}\""}
+eval make image ${FILES:+"FILES=files"} ${OW_PROFILE:+"PROFILE=${OW_PROFILE}"} ${packages:+"PACKAGES=\"${packages}\""}
