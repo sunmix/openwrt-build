@@ -10,8 +10,6 @@ haveged
 ip
 luci
 luci-proto-ipv6
-shadow-groupadd
-shadow-useradd
 sudo
 "
 
