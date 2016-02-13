@@ -1,24 +1,28 @@
 
 PACKAGES_base="
 -dnsmasq
+-odhcpd
+-ppp
+-ppp-mod-pppoe
+-wpad-mini
+ca-certificates
 haveged
 ip
 luci
 luci-proto-ipv6
+shadow-groupadd
 shadow-useradd
 sudo
 "
 
 PACKAGES_nas="
--odhcpd
--ppp
--ppp-mod-pppoe
 block-mount
 btrfs-progs
 coreutils-sha1sum
 coreutils-sha256sum
 coreutils-sha512sum
 e2fsprogs
+forked-daapd
 git
 kmod-8139cp
 kmod-8139too
@@ -36,28 +40,36 @@ kmod-usb-storage
 kmod-usb-uhci
 kmod-usb2
 kmod-usb3
+lftp
+lsblk
 luci-app-minidlna
 luci-app-samba
 luci-app-transmission
 rsyncd
-usbutils
+transmission-web
+"
+
+PACKAGES_ap="
+wpad-mini
 "
 
 PACKAGES_router="
-bind-dig
 dnsmasq-full
 luci-app-ddns
 luci-app-firewall
+odhcpd
+ppp
+ppp-mod-pppoe
 wpad-mini
 "
 
 PACKAGES_gfw="
-chinadns
 ipset
 iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
 shadowsocks-libev
+unbound
 "
 
 PACKAGES_usbnet="
@@ -71,7 +83,9 @@ kmod-carl9170
 "
 
 PACKAGES_util="
-aria2
+bind-dig
 htop
+lsof
+procps
 wget
 "
