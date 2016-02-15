@@ -1,10 +1,6 @@
 
 PACKAGES_base="
 -dnsmasq
--odhcpd
--ppp
--ppp-mod-pppoe
--wpad-mini
 ca-certificates
 haveged
 ip
@@ -14,6 +10,10 @@ sudo
 "
 
 PACKAGES_nas="
+-odhcpd
+-ppp
+-ppp-mod-pppoe
+-wpad-mini
 block-mount
 btrfs-progs
 coreutils-sha1sum
@@ -48,17 +48,15 @@ transmission-web
 "
 
 PACKAGES_ap="
-wpad-mini
+-odhcpd
+-ppp
+-ppp-mod-pppoe
 "
 
 PACKAGES_router="
 dnsmasq-full
 luci-app-ddns
 luci-app-firewall
-odhcpd
-ppp
-ppp-mod-pppoe
-wpad-mini
 "
 
 PACKAGES_gfw="
