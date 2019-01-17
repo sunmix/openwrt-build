@@ -1,10 +1,13 @@
-OW_ARCH=ar71xx
-OW_SUBARCH=nand
-OW_PROFILE=WNDR4300
-IMAGEBUILDER_HASH=74ea72fee8d246348dd0eb5a4f4ff3153ea716c3a4e75062d97189aa1a78d7ea
+OW_PROFILE=WNDR3700V4
+OW_TARGET=ar71xx
+OW_SUBTARGET=nand
+OW_ARCH=mips
+OW_CPU_TYPE=24kc
+OW_CPU_SUBTYPE=
+IMAGEBUILDER_HASH=b732f4aca4bac580cffffd50494ee88945df63a592a5a4419967cd7874bdaba4
 
-FILES=(_common_ _router_ wndr3700v4)
-PACKAGES=(base router gfw)
+#FILES=(_common_ _router_ wndr3700v4)
+PACKAGES=(base router)
 PACKAGES_EXT=""
 
-CUSTOM_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")
+#CUSTOM_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")
