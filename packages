@@ -51,6 +51,7 @@ iptables-mod-u32
 luci-app-ddns
 luci-app-firewall
 luci-app-shadowsocks-libev
+luci-app-sqm
 shadowsocks-libev-config
 shadowsocks-libev-ss-local
 shadowsocks-libev-ss-server
