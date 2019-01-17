@@ -57,6 +57,7 @@ PACKAGES_router="
 dnsmasq-full
 luci-app-ddns
 luci-app-firewall
+luci-app-sqm
 "
 
 PACKAGES_gfw="
