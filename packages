@@ -3,6 +3,7 @@ PACKAGES_base="
 ca-certificates
 haveged
 ip
+libustream-mbedtls
 luci
 sudo
 "
