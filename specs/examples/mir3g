@@ -1,0 +1,17 @@
+OW_VERSION=18.06.1
+OW_PROFILE=mir3g
+OW_TARGET=ramips
+OW_SUBTARGET=mt7621
+OW_ARCH=mipsel
+OW_CPU_TYPE=24kc
+OW_CPU_SUBTYPE=
+IMAGEBUILDER_HASH=8beb097b7cf01c947b52112e0315a8a032ccd3749df30d31d2e9cc578383cd34
+
+#FILES=(_common_ _router_ mir3g)
+PACKAGES=(base router util)
+PACKAGES_EXT="
+luci-i18n-base-zh-cn
+"
+
+#MIRROR_URL="http://openwrt.lan/openwrt"
+#CUSTOM_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")

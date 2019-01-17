@@ -17,8 +17,7 @@ function check_hash() {
   $cmd "$1" | cut -d' ' -f1
 }
 
-# Load openwrt & packages
-source "${openwrt_dir}/openwrt"
+# Load packages
 source "${openwrt_dir}/packages"
 
 # Load spec
@@ -30,7 +29,7 @@ source ${spec_file} || { print_usage; exit 1; }
 
 # Check spec
 num=0
-for x in OW_ARCH IMAGEBUILDER_HASH OW_SUBARCH; do
+for x in OW_VERSION OW_TARGET OW_SUBTARGET IMAGEBUILDER_HASH; do
   [ "a" == "a${!x}" ] && { echo $x has NO value!; num=$(( $num + 1 )); }
 done
 [ $num -gt '0' ] && exit 1
@@ -38,11 +37,13 @@ done
 #
 build_dir="${openwrt_dir}/build"
 build_spec_dir="${build_dir}/${spec}"
-bin_dir="${build_dir}/dl_${OW_ARCH}_${OW_SUBARCH}"
-repo_url="${MIRROR_URL:-https://downloads.openwrt.org}/${codename}/${version}/${OW_ARCH}/${OW_SUBARCH}"
-IMAGEBUILDER=OpenWrt-ImageBuilder-${version}-${OW_ARCH}-${OW_SUBARCH}.Linux-x86_64.tar.bz2
-IMAGEBUILDER_DIR=${IMAGEBUILDER%.tar.bz2}
-IMAGEBUILDER_URL="${repo_url}/${IMAGEBUILDER}"
+bin_dir="${build_dir}/dl_${OW_VERSION}_${OW_TARGET}_${OW_SUBTARGET}"
+mirror_url="${MIRROR_URL:-https://downloads.openwrt.org}"
+target_url="${mirror_url}/releases/${OW_VERSION}/targets/${OW_TARGET}/${OW_SUBTARGET}"
+pkg_url="${mirror_url}/releases/${OW_VERSION}/packages/${OW_ARCH}_${OW_CPU_TYPE}"${OW_CPU_SUBTYPE:+"_${OW_CPU_SUBTYPE}"}
+IMAGEBUILDER=openwrt-imagebuilder-${OW_VERSION}-${OW_TARGET}-${OW_SUBTARGET}.Linux-x86_64.tar.xz
+IMAGEBUILDER_DIR=${IMAGEBUILDER%.tar.xz}
+IMAGEBUILDER_URL="${target_url}/${IMAGEBUILDER}"
 
 # PACKAGES
 packages=""
@@ -71,7 +72,7 @@ fi
 if [ ! -e ${build_spec_dir} ]; then
   [ -e ${IMAGEBUILDER_DIR} ] && rm -rf ${IMAGEBUILDER_DIR}
   echo "Unarchive ${IMAGEBUILDER} ..."
-  tar xjf ${IMAGEBUILDER} && mv ${IMAGEBUILDER_DIR} ${build_spec_dir}
+  tar xJf ${IMAGEBUILDER} && mv ${IMAGEBUILDER_DIR} ${build_spec_dir}
 fi
 
 #
@@ -90,8 +91,9 @@ mv repositories.conf repositories.conf.bak
 for repo in "${CUSTOM_REPOSITORIES[@]}"; do
   echo ${repo} >> repositories.conf
 done
-for repo in "base" "luci" "packages" "routing" "telephony" "management"; do
-  echo "src/gz ${codename}_${repo} ${repo_url}/packages/${repo}" >> repositories.conf
+echo "src/gz openwrt_core ${target_url}/packages" >> repositories.conf
+for repo in "base" "luci" "packages" "routing" "telephony"; do
+  echo "src/gz openwrt_${repo} ${pkg_url}/${repo}" >> repositories.conf
 done
 echo "src imagebuilder file:packages" >> repositories.conf
 
