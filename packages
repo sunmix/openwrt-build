@@ -10,34 +10,20 @@ sudo
 
 PACKAGES_nas="
 block-mount
-coreutils-sha1sum
-coreutils-sha256sum
-coreutils-sha512sum
 e2fsprogs
-forked-daapd
 git
-kmod-8139cp
-kmod-8139too
-kmod-ata-ahci
-kmod-button-hotplug
-kmod-fs-btrfs
 kmod-fs-ext4
 kmod-fs-vfat
-kmod-gpio-button-hotplug
-kmod-input-evdev
 kmod-nls-utf8
-kmod-usb-hid
 kmod-usb-ohci
 kmod-usb-storage
 kmod-usb-uhci
 kmod-usb2
 kmod-usb3
-lftp
-lsblk
-luci-app-minidlna
 luci-app-samba
 luci-app-transmission
 rsyncd
+transmission-daemon-mbedtls
 transmission-web
 "
 
@@ -49,7 +35,6 @@ iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
 luci-app-ddns
-luci-app-firewall
 luci-app-shadowsocks-libev
 luci-app-sqm
 shadowsocks-libev-config
@@ -59,6 +44,13 @@ shadowsocks-libev-ss-redir
 shadowsocks-libev-ss-rules
 shadowsocks-libev-ss-tunnel
 unbound
+"
+
+PACKAGES_hw="
+kmod-button-hotplug
+kmod-gpio-button-hotplug
+kmod-input-evdev
+kmod-usb-hid
 "
 
 PACKAGES_usbnet="
@@ -74,6 +66,7 @@ kmod-carl9170
 PACKAGES_util="
 bind-dig
 htop
+lsblk
 lsof
 procps-ng
 wget
