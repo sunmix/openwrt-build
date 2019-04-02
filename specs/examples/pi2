@@ -1,17 +1,15 @@
-OW_VERSION=18.06.1
+OW_VERSION=18.06.2
 OW_PROFILE=rpi-2
 OW_TARGET=brcm2708
 OW_SUBTARGET=bcm2709
 OW_ARCH=arm
 OW_CPU_TYPE=cortex-a7
 OW_CPU_SUBTYPE=neon-vfpv4
-IMAGEBUILDER_HASH=f453b87d876e8b36495aad4da603227ee88efdcc44659ccaf1b9cb70b28fef7d
+IMAGEBUILDER_HASH=510e64b58d6c974d23cdbd19ebc2edc2df5d4a083b98497e7c4b03cd8e9dfc6a
 
 #FILES=(_common_ _router_ pi2)
-PACKAGES=(base router usbnet usbwifi util)
-PACKAGES_EXT="
-luci-i18n-base-zh-cn
-"
+PACKAGES=(base nas usbnet usbwifi util)
+PACKAGES_EXT=""
 
 #MIRROR_URL="http://openwrt.lan/openwrt"
 #CUSTOM_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")
