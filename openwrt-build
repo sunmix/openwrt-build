@@ -13,7 +13,7 @@ function print_usage() {
 }
 function check_hash() {
   cmd=sha256sum
-  which sha256sum >/dev/null && cmd="shasum -a 256"
+  which sha256sum >/dev/null || cmd="shasum -a 256"
   $cmd "$1" | cut -d' ' -f1
 }
 
