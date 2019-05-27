@@ -8,7 +8,7 @@ OW_CPU_SUBTYPE=
 IMAGEBUILDER_HASH=fbec3434c28fb15892f3e6a3c3deaed983d3aefbd22237d72c65eeed46fea62d
 
 #FILES=(_common_ _router_ mir3g)
-PACKAGES=(base nas router util)
+PACKAGES=(base router util)
 PACKAGES_EXT=""
 
 #MIRROR_URL="http://openwrt.lan/openwrt"
