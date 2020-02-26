@@ -2,7 +2,7 @@
 PACKAGES_base="
 ca-certificates
 ip
-libustream-mbedtls
+libustream-openssl
 luci
 sudo
 "
