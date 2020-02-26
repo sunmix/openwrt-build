@@ -8,7 +8,7 @@ OW_CPU_SUBTYPE=
 IMAGEBUILDER_HASH=f7c45b984125abec7eece6133eabf4a3170ba7b7d45d3c46f59a40bc5b906694
 
 #FILES=(_common_ _router_ mir3g)
-PACKAGES=(base router util)
+PACKAGES=(base router usbtethering util)
 PACKAGES_EXT=""
 
 #MIRROR_URL="http://openwrt.lan/openwrt"
