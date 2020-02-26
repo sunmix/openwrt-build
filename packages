@@ -52,6 +52,12 @@ kmod-usb-net-cdc-ether
 kmod-usb-net-mcs7830
 "
 
+PACKAGES_usbtethering="
+kmod-usb-net 
+kmod-usb-net-rndis 
+kmod-usb-net-cdc-ether
+"
+
 PACKAGES_usbwifi="
 kmod-carl9170
 "
