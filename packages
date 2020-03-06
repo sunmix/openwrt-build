@@ -1,9 +1,8 @@
 
 PACKAGES_base="
 ca-certificates
-haveged
 ip
-libustream-mbedtls
+libustream-openssl
 luci
 sudo
 "
@@ -35,17 +34,11 @@ iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
 luci-app-ddns
-luci-app-shadowsocks-libev
 luci-app-sqm
 luci-app-wireguard
 luci-proto-wireguard
-shadowsocks-libev-config
-shadowsocks-libev-ss-local
-shadowsocks-libev-ss-server
-shadowsocks-libev-ss-redir
-shadowsocks-libev-ss-rules
-shadowsocks-libev-ss-tunnel
-unbound
+-wpad-mini
++wpad
 "
 
 PACKAGES_hw="
@@ -59,6 +52,12 @@ PACKAGES_usbnet="
 kmod-usb-net-asix
 kmod-usb-net-cdc-ether
 kmod-usb-net-mcs7830
+"
+
+PACKAGES_usbtethering="
+kmod-usb-net 
+kmod-usb-net-rndis 
+kmod-usb-net-cdc-ether
 "
 
 PACKAGES_usbwifi="
