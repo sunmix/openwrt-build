@@ -38,7 +38,7 @@ luci-app-sqm
 luci-app-wireguard
 luci-proto-wireguard
 -wpad-mini
-+wpad
+wpad
 "
 
 PACKAGES_hw="
