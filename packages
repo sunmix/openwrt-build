@@ -30,15 +30,20 @@ PACKAGES_router="
 -dnsmasq
 dnsmasq-full
 ipset
+iptables-mod-conntrack-extra
 iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
 luci-app-ddns
+luci-app-shadowsocks-libev
 luci-app-sqm
-luci-app-wireguard
-luci-proto-wireguard
+shadowsocks-libev-ss-rules
+shadowsocks-libev-ss-tunnel
+v2ray-plugin
+unbound-daemon
+-wpad-basic
 -wpad-mini
-wpad
+wpad-openssl
 "
 
 PACKAGES_hw="
