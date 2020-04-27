@@ -29,7 +29,7 @@ source ${spec_file} || { print_usage; exit 1; }
 
 # Check spec
 num=0
-for x in OW_VERSION OW_TARGET OW_SUBTARGET IMAGEBUILDER_HASH; do
+for x in OW_VERSION OW_TARGET OW_SUBTARGET OW_IB_HASH; do
   [ "a" == "a${!x}" ] && { echo $x has NO value!; num=$(( $num + 1 )); }
 done
 [ $num -gt '0' ] && exit 1
@@ -41,9 +41,9 @@ bin_dir="${build_dir}/dl_${OW_VERSION}_${OW_TARGET}_${OW_SUBTARGET}"
 mirror_url="${MIRROR_URL:-https://downloads.openwrt.org}"
 target_url="${mirror_url}/releases/${OW_VERSION}/targets/${OW_TARGET}/${OW_SUBTARGET}"
 pkg_url="${mirror_url}/releases/${OW_VERSION}/packages/${OW_ARCH}_${OW_CPU_TYPE}"${OW_CPU_SUBTYPE:+"_${OW_CPU_SUBTYPE}"}
-IMAGEBUILDER=openwrt-imagebuilder-${OW_VERSION}-${OW_TARGET}-${OW_SUBTARGET}.Linux-x86_64.tar.xz
-IMAGEBUILDER_DIR=${IMAGEBUILDER%.tar.xz}
-IMAGEBUILDER_URL="${target_url}/${IMAGEBUILDER}"
+OW_IB=openwrt-imagebuilder-${OW_VERSION}-${OW_TARGET}-${OW_SUBTARGET}.Linux-x86_64.tar.xz
+OW_IB_DIR=${OW_IB%.tar.xz}
+OW_IB_URL="${target_url}/${OW_IB}"
 
 # PACKAGES
 packages=""
@@ -58,21 +58,21 @@ mkdir -p "${build_dir}"
 cd "${build_dir}"
 
 # Download & unarchive Image Builder
-if [ ! -f "${IMAGEBUILDER}" ] || [ "${IMAGEBUILDER_HASH}" != "$( check_hash ${IMAGEBUILDER} )" ]; then
+if [ ! -f "${OW_IB}" ] || [ "${OW_IB_HASH}" != "$( check_hash ${OW_IB} )" ]; then
   # Remove old files
   [ -e ${build_spec_dir} ] && rm -rf ${build_spec_dir}
-  [ -f ${IMAGEBUILDER} ] && rm ${IMAGEBUILDER}
+  [ -f ${OW_IB} ] && rm ${OW_IB}
   # Download
-  echo "Downloading ${IMAGEBUILDER_URL} ..."
-  curl -# -O ${IMAGEBUILDER_URL} || exit 1
-  [ "${IMAGEBUILDER_HASH}" != "$( check_hash ${IMAGEBUILDER} )" ] && { echo "HASH NOT matches!"; exit 1; }
+  echo "Downloading ${OW_IB_URL} ..."
+  curl -# -O ${OW_IB_URL} || exit 1
+  [ "${OW_IB_HASH}" != "$( check_hash ${OW_IB} )" ] && { echo "HASH NOT matches!"; exit 1; }
 fi
 
 # Unarchive
 if [ ! -e ${build_spec_dir} ]; then
-  [ -e ${IMAGEBUILDER_DIR} ] && rm -rf ${IMAGEBUILDER_DIR}
-  echo "Unarchive ${IMAGEBUILDER} ..."
-  tar xJf ${IMAGEBUILDER} && mv ${IMAGEBUILDER_DIR} ${build_spec_dir}
+  [ -e ${OW_IB_DIR} ] && rm -rf ${OW_IB_DIR}
+  echo "Unarchive ${OW_IB} ..."
+  tar xJf ${OW_IB} && mv ${OW_IB_DIR} ${build_spec_dir}
 fi
 
 #
