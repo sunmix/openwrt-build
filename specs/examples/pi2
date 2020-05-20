@@ -1,15 +1,8 @@
-OW_VERSION=19.07.2
 OW_PROFILE=rpi-2
 OW_TARGET=brcm2708
 OW_SUBTARGET=bcm2709
-OW_ARCH=arm
+OW_CPU_ARCH=arm
 OW_CPU_TYPE=cortex-a7
 OW_CPU_SUBTYPE=neon-vfpv4
-OW_IB_HASH=b2eaccc027a921983caa9705e559663cebdc6087640d3d27552d4ca6d7135759
 
-#FILES=(_common_ _router_ pi2)
-PACKAGES=(base nas usbnet usbwifi util)
-PACKAGES_EXT=""
-
-#MIRROR_URL="http://openwrt.lan/openwrt"
-#CUSTOM_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")
+OW_PKG_GROUP=(base nas usbnet usbwifi util)

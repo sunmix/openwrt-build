@@ -1,5 +1,5 @@
 
-PACKAGES_base="
+OW_PKG_GROUP_base="
 ca-certificates
 ip
 libustream-openssl
@@ -7,7 +7,7 @@ luci
 sudo
 "
 
-PACKAGES_nas="
+OW_PKG_GROUP_nas="
 block-mount
 e2fsprogs
 git
@@ -26,7 +26,7 @@ transmission-daemon-mbedtls
 transmission-web
 "
 
-PACKAGES_router="
+OW_PKG_GROUP_router="
 -dnsmasq
 dnsmasq-full
 ipset
@@ -34,42 +34,41 @@ iptables-mod-conntrack-extra
 iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
-luci-app-ddns
 luci-app-shadowsocks-libev
 luci-app-sqm
 shadowsocks-libev-ss-rules
 shadowsocks-libev-ss-tunnel
-v2ray-plugin
+shadowsocks-v2ray-plugin
 unbound-daemon
 -wpad-basic
 -wpad-mini
 wpad-openssl
 "
 
-PACKAGES_hw="
+OW_PKG_GROUP_hw="
 kmod-button-hotplug
 kmod-gpio-button-hotplug
 kmod-input-evdev
 kmod-usb-hid
 "
 
-PACKAGES_usbnet="
+OW_PKG_GROUP_usbnet="
 kmod-usb-net-asix
 kmod-usb-net-cdc-ether
 kmod-usb-net-mcs7830
 "
 
-PACKAGES_usbtethering="
-kmod-usb-net 
-kmod-usb-net-rndis 
+OW_PKG_GROUP_usbtethering="
+kmod-usb-net
+kmod-usb-net-rndis
 kmod-usb-net-cdc-ether
 "
 
-PACKAGES_usbwifi="
+OW_PKG_GROUP_usbwifi="
 kmod-carl9170
 "
 
-PACKAGES_util="
+OW_PKG_GROUP_util="
 bind-dig
 htop
 lsblk

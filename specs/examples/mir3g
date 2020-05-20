@@ -1,15 +1,8 @@
-OW_VERSION=19.07.2
 OW_PROFILE=xiaomi_mir3g
 OW_TARGET=ramips
 OW_SUBTARGET=mt7621
-OW_ARCH=mipsel
+OW_CPU_ARCH=mipsel
 OW_CPU_TYPE=24kc
 OW_CPU_SUBTYPE=
-OW_IB_HASH=2a57f2eb7b0ffdc2d7ae03900358dd0c54a9ab498c8164e18732bbf4a0a86721
 
-#FILES=(_common_ _router_ mir3g)
-PACKAGES=(base router usbtethering util)
-PACKAGES_EXT=""
-
-#MIRROR_URL="http://openwrt.lan/openwrt"
-#CUSTOM_REPOSITORIES=("src/gz myrepo http://openwrt.lan/openwrt/${OW_ARCH}/${OW_SUBARCH}")
+OW_PKG_GROUP=(base router util)

@@ -1,109 +1,129 @@
 #!/bin/bash
-# exit on error
-set -e
-# Start point
-openwrt_dir="$( cd `dirname "${BASH_SOURCE[0]}"` && pwd )"
-spec_dir="${openwrt_dir}/specs"
+
+OW_VERSION="19.07.3"
+OW_PROFILE="xiaomi_mir3g"
+OW_TARGET="ramips"
+OW_SUBTARGET="mt7621"
+OW_CPU_ARCH=mipsel
+OW_CPU_TYPE=24kc
+OW_CPU_SUBTYPE=
+OW_MIRROR="https://downloads.openwrt.org"
+OW_REPOS_EXT=()
+OW_PKG_EXT=()
+
+OW_CC="gcc-7.5.0"
+OW_DIR="$( cd `dirname "${BASH_SOURCE[0]}"` && pwd )"
+OW_SPECS_DIR="${OW_DIR}/specs"
+OW_BUILD_DIR="${OW_DIR}/build"
+OW_SRC_DIR="${OW_BUILD_DIR}/src"
 
 # Utilities
 function print_usage() {
   echo -e "Usage:\n    $(basename "${BASH_SOURCE[0]}") <spec>"
   echo "Note: <spec> SHOULD be defined in specs folder."
-  [ -d ${spec_dir} ] && echo "Current specs := $(cd "${spec_dir}"; echo *)"
-}
-function check_hash() {
-  cmd=sha256sum
-  which sha256sum >/dev/null || cmd="shasum -a 256"
-  $cmd "$1" | cut -d' ' -f1
+  [ -d ${OW_SPECS_DIR} ] && echo "Current specs := $(cd "${OW_SPECS_DIR}"; echo *)"
 }
 
-# Load packages
-source "${openwrt_dir}/packages"
-
-# Load spec
+# Start point
 [ $# -eq '0' ] && { print_usage; exit 1; }
-spec=$1
-spec_file="${openwrt_dir}/specs/${spec}"
-echo "Load ${spec_file} ..."
-source ${spec_file} || { print_usage; exit 1; }
+OW_SPEC=$1
+OW_SPEC_FILE="${OW_SPECS_DIR}/${OW_SPEC}"
+OW_SPEC_BUILD_DIR="${OW_BUILD_DIR}/${OW_SPEC}"
+echo "Load ${OW_SPEC_FILE} ..."
+source ${OW_SPEC_FILE} || { print_usage; exit 1; }
 
-# Check spec
-num=0
-for x in OW_VERSION OW_TARGET OW_SUBTARGET OW_IB_HASH; do
-  [ "a" == "a${!x}" ] && { echo $x has NO value!; num=$(( $num + 1 )); }
-done
-[ $num -gt '0' ] && exit 1
+OW_DL_DIR="${OW_BUILD_DIR}/dl_${OW_VERSION}_${OW_TARGET}_${OW_SUBTARGET}"
+OW_TARGET_URL="${OW_MIRROR}/releases/${OW_VERSION}/targets/${OW_TARGET}/${OW_SUBTARGET}"
+OW_PKG_URL="${OW_MIRROR}/releases/${OW_VERSION}/packages/${OW_CPU_ARCH}_${OW_CPU_TYPE}${OW_CPU_SUBTYPE:+"_${OW_CPU_SUBTYPE}"}"
+OW_SDK="openwrt-sdk-${OW_VERSION}-${OW_TARGET}-${OW_SUBTARGET}_${OW_CC}_musl.Linux-x86_64"
+OW_SDK_DIR="${OW_BUILD_DIR}/${OW_SDK}"
+OW_SDK_TAR="${OW_SDK}.tar.xz"
+OW_SDK_URL="${OW_TARGET_URL}/${OW_SDK_TAR}"
+OW_IB="openwrt-imagebuilder-${OW_VERSION}-${OW_TARGET}-${OW_SUBTARGET}.Linux-x86_64"
+OW_IB_DIR="${OW_BUILD_DIR}/${OW_IB}"
+OW_IB_TAR="${OW_IB}.tar.xz"
+OW_IB_URL="${OW_TARGET_URL}/${OW_IB_TAR}"
 
-#
-build_dir="${openwrt_dir}/build"
-build_spec_dir="${build_dir}/${spec}"
-bin_dir="${build_dir}/dl_${OW_VERSION}_${OW_TARGET}_${OW_SUBTARGET}"
-mirror_url="${MIRROR_URL:-https://downloads.openwrt.org}"
-target_url="${mirror_url}/releases/${OW_VERSION}/targets/${OW_TARGET}/${OW_SUBTARGET}"
-pkg_url="${mirror_url}/releases/${OW_VERSION}/packages/${OW_ARCH}_${OW_CPU_TYPE}"${OW_CPU_SUBTYPE:+"_${OW_CPU_SUBTYPE}"}
-OW_IB=openwrt-imagebuilder-${OW_VERSION}-${OW_TARGET}-${OW_SUBTARGET}.Linux-x86_64.tar.xz
-OW_IB_DIR=${OW_IB%.tar.xz}
-OW_IB_URL="${target_url}/${OW_IB}"
+mkdir -p "${OW_BUILD_DIR}"
 
-# PACKAGES
-packages=""
-for pkg in "${PACKAGES[@]}"; do
-	pkg_var=PACKAGES_${pkg}
-	packages="${packages} "`echo ${!pkg_var}`
-done
-packages="${packages} "`echo ${PACKAGES_EXT}`
+cd "${OW_BUILD_DIR}"
+OK_FILE=${OW_SDK_TAR}.ok
+[ -f ${OK_FILE} ] || {
+	curl -# -O ${OW_SDK_URL} || {
+		rm -f ${OK_FILE}
+		exit 1
+	}
+	touch ${OK_FILE}
+}
+OK_FILE=${OW_SDK}.ok
+[ -f ${OK_FILE} ] || {
+	rm -rf ${OW_SDK}
+	tar xJf ${OW_SDK_TAR} || exit 1
+	touch ${OK_FILE}
+}
+cd ${OW_SDK_DIR}
+cp feeds.conf.default feeds.conf
+echo "src-git my https://github.com/sunmix/openwrt-mypackages.git" >> feeds.conf
+./scripts/feeds update -a || exit 1
+./scripts/feeds install -p my shadowsocks-libev || exit 1
+./scripts/feeds install -p my shadowsocks-v2ray-plugin || exit 1
+echo "CONFIG_CCACHE=y" > .config
+make defconfig || exit 1
+make -j8 package/shadowsocks-libev/compile || exit 1
+make -j8 package/shadowsocks-v2ray-plugin/compile || exit 1
+make package/index
+OW_REPOS_EXT+=("src my file://${OW_SDK_DIR}/bin/packages/${OW_CPU_ARCH}_${OW_CPU_TYPE}${OW_CPU_SUBTYPE:+"_${OW_CPU_SUBTYPE}"}/my")
 
-# Prepare building
-mkdir -p "${build_dir}"
-cd "${build_dir}"
+cd "${OW_BUILD_DIR}"
+rm -rf ${OW_IB} ${OW_SPEC}
+[ -f ${OW_IB_TAR}.ok ] || {
+	curl -# -O ${OW_IB_URL} || { 
+		rm -f ${OW_IB_TAR}.ok
+		exit 1
+	} 
+	touch ${OW_IB_TAR}.ok
+}
+tar xJf ${OW_IB_TAR} || exit 1
+mv ${OW_IB} ${OW_SPEC}
 
-# Download & unarchive Image Builder
-if [ ! -f "${OW_IB}" ] || [ "${OW_IB_HASH}" != "$( check_hash ${OW_IB} )" ]; then
-  # Remove old files
-  [ -e ${build_spec_dir} ] && rm -rf ${build_spec_dir}
-  [ -f ${OW_IB} ] && rm ${OW_IB}
-  # Download
-  echo "Downloading ${OW_IB_URL} ..."
-  curl -# -O ${OW_IB_URL} || exit 1
-  [ "${OW_IB_HASH}" != "$( check_hash ${OW_IB} )" ] && { echo "HASH NOT matches!"; exit 1; }
-fi
+cd ${OW_SPEC_BUILD_DIR}
 
-# Unarchive
-if [ ! -e ${build_spec_dir} ]; then
-  [ -e ${OW_IB_DIR} ] && rm -rf ${OW_IB_DIR}
-  echo "Unarchive ${OW_IB} ..."
-  tar xJf ${OW_IB} && mv ${OW_IB_DIR} ${build_spec_dir}
-fi
-
-#
-cd ${build_spec_dir}
 # Clean up
-rm -rf dl
-rm -rf files
-
-# dl -> ../dl
-mkdir -p "${bin_dir}"
-ln -s "${bin_dir}" dl
+rm -rf dl files
+mkdir -p "${OW_DL_DIR}" && ln -s "${OW_DL_DIR}" dl
 
 # repositories.conf
 echo "Generate repositories.conf ..."
-mv repositories.conf repositories.conf.bak
-for repo in "${CUSTOM_REPOSITORIES[@]}"; do
+[ -f repositories.conf.orig ] || mv repositories.conf repositories.conf.orig
+echo "src/gz openwrt_core ${OW_TARGET_URL}/packages" > repositories.conf
+for repo in "base" "luci" "packages" "routing" "telephony"; do
+  echo "src/gz openwrt_${repo} ${OW_PKG_URL}/${repo}" >> repositories.conf
+done
+#echo "src imagebuilder file:packages" >> repositories.conf
+for repo in "${OW_REPOS_EXT[@]}"; do
   echo ${repo} >> repositories.conf
 done
-echo "src/gz openwrt_core ${target_url}/packages" >> repositories.conf
-for repo in "base" "luci" "packages" "routing" "telephony"; do
-  echo "src/gz openwrt_${repo} ${pkg_url}/${repo}" >> repositories.conf
-done
-echo "src imagebuilder file:packages" >> repositories.conf
 
-# files
+# FILES
 echo "Copy files ..."
 mkdir -p files
 for x in "${FILES[@]}"; do
-  cp -f -R -v "${openwrt_dir}/files/$x"/* files/
+  cp -f -R -v "${OW_DIR}/files/$x"/* files/
 done
+
+# PACKAGES
+source "${OW_DIR}/package_group"
+OW_PKGS=""
+for pkg_grp in "${OW_PKG_GROUP[@]}"; do
+	pkg_grp=OW_PKG_GROUP_${pkg_grp}
+	OW_PKGS="${OW_PKGS} "`echo ${!pkg_grp}`
+done
+OW_PKGS="${OW_PKGS} "`echo ${OW_PKG_EXT}`
 
 # make image
 echo "Generate images ..."
-eval make image ${FILES:+"FILES=files"} ${OW_PROFILE:+"PROFILE=${OW_PROFILE}"} ${packages:+"PACKAGES=\"${packages}\""}
+eval make image \
+     ${FILES:+"FILES=files"} \
+     ${OW_PROFILE:+"PROFILE=${OW_PROFILE}"} \
+     ${OW_PKGS:+"PACKAGES=\"${OW_PKGS}\""}
+
