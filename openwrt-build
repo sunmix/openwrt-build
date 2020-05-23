@@ -15,7 +15,7 @@ OW_CC="gcc-7.5.0"
 OW_DIR="$( cd `dirname "${BASH_SOURCE[0]}"` && pwd )"
 OW_SPECS_DIR="${OW_DIR}/specs"
 OW_BUILD_DIR="${OW_DIR}/build"
-OW_SRC_DIR="${OW_BUILD_DIR}/src"
+OW_SRC_DIR="${OW_BUILD_DIR}/_src_"
 
 # Utilities
 function print_usage() {
@@ -62,6 +62,7 @@ OK_FILE=${OW_SDK}.ok
 	touch ${OK_FILE}
 }
 cd ${OW_SDK_DIR}
+rm -rf dl && mkdir -p "${OW_SRC_DIR}" && ln -s "${OW_SRC_DIR}" dl
 cp feeds.conf.default feeds.conf
 echo "src-git my https://github.com/sunmix/openwrt-mypackages.git" >> feeds.conf
 ./scripts/feeds update -a || exit 1
