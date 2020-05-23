@@ -81,10 +81,10 @@ OW_REPOS_EXT+=("src my file://${OW_SDK_DIR}/bin/packages/${OW_CPU_ARCH}_${OW_CPU
 cd "${OW_BUILD_DIR}"
 rm -rf ${OW_IB} ${OW_SPEC}
 [ -f ${OW_IB_TAR}.ok ] || {
-	curl -# -O ${OW_IB_URL} || { 
+	curl -# -O ${OW_IB_URL} || {
 		rm -f ${OW_IB_TAR}.ok
 		exit 1
-	} 
+	}
 	touch ${OW_IB_TAR}.ok
 }
 tar xJf ${OW_IB_TAR} || exit 1
@@ -130,6 +130,6 @@ eval make image \
      ${OW_PKGS:+"PACKAGES=\"${OW_PKGS}\""}
 
 # copy images
-rm -rf "${OW_IMG_DIR}" && mkdir -p "${OW_IMG_DIR}" 
-cp -r "${OW_SPEC_BUILD_DIR}/bin/targets/${OW_TARGET}/${OW_SUBTARGET}/" "${OW_IMG_DIR}"
+rm -rf "${OW_IMG_DIR}" && mkdir -p "${OW_IMG_DIR}"
+cp "${OW_SPEC_BUILD_DIR}/bin/targets/${OW_TARGET}/${OW_SUBTARGET}"/* "${OW_IMG_DIR}"/
 
