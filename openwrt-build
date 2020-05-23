@@ -67,7 +67,10 @@ echo "src-git my https://github.com/sunmix/openwrt-mypackages.git" >> feeds.conf
 ./scripts/feeds update -a || exit 1
 ./scripts/feeds install -p my shadowsocks-libev || exit 1
 ./scripts/feeds install -p my shadowsocks-v2ray-plugin || exit 1
-echo "CONFIG_CCACHE=y" > .config
+cat << 'EOF' > .config
+CONFIG_CCACHE=y
+# CONFIG_SIGNED_PACKAGES is not set
+EOF
 make defconfig || exit 1
 make -j8 package/shadowsocks-libev/compile || exit 1
 make -j8 package/shadowsocks-v2ray-plugin/compile || exit 1
