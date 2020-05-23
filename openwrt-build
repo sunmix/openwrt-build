@@ -32,7 +32,6 @@ OW_SPEC_BUILD_DIR="${OW_BUILD_DIR}/${OW_SPEC}"
 echo "Load ${OW_SPEC_FILE} ..."
 source ${OW_SPEC_FILE} || { print_usage; exit 1; }
 
-OW_DL_DIR="${OW_BUILD_DIR}/dl_${OW_VERSION}_${OW_TARGET}_${OW_SUBTARGET}"
 OW_TARGET_URL="${OW_MIRROR}/releases/${OW_VERSION}/targets/${OW_TARGET}/${OW_SUBTARGET}"
 OW_PKG_URL="${OW_MIRROR}/releases/${OW_VERSION}/packages/${OW_CPU_ARCH}_${OW_CPU_TYPE}${OW_CPU_SUBTYPE:+"_${OW_CPU_SUBTYPE}"}"
 OW_SDK="openwrt-sdk-${OW_VERSION}-${OW_TARGET}-${OW_SUBTARGET}_${OW_CC}_musl.Linux-x86_64"
@@ -93,9 +92,7 @@ mv ${OW_IB} ${OW_SPEC}
 cd ${OW_SPEC_BUILD_DIR}
 
 # Clean up
-rm -rf dl files
-mkdir -p "${OW_DL_DIR}" && ln -s "${OW_DL_DIR}" dl
-
+rm -rf dl
 # repositories.conf
 echo "Generate repositories.conf ..."
 [ -f repositories.conf.orig ] || mv repositories.conf repositories.conf.orig
