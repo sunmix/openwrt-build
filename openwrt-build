@@ -32,6 +32,7 @@ OW_SPEC_BUILD_DIR="${OW_BUILD_DIR}/${OW_SPEC}"
 echo "Load ${OW_SPEC_FILE} ..."
 source ${OW_SPEC_FILE} || { print_usage; exit 1; }
 
+OW_IMG_DIR="${OW_BUILD_DIR}/_images_/${OW_SPEC}/"
 OW_TARGET_URL="${OW_MIRROR}/releases/${OW_VERSION}/targets/${OW_TARGET}/${OW_SUBTARGET}"
 OW_PKG_URL="${OW_MIRROR}/releases/${OW_VERSION}/packages/${OW_CPU_ARCH}_${OW_CPU_TYPE}${OW_CPU_SUBTYPE:+"_${OW_CPU_SUBTYPE}"}"
 OW_SDK="openwrt-sdk-${OW_VERSION}-${OW_TARGET}-${OW_SUBTARGET}_${OW_CC}_musl.Linux-x86_64"
@@ -127,4 +128,8 @@ eval make image \
      ${FILES:+"FILES=files"} \
      ${OW_PROFILE:+"PROFILE=${OW_PROFILE}"} \
      ${OW_PKGS:+"PACKAGES=\"${OW_PKGS}\""}
+
+# copy images
+rm -rf "${OW_IMG_DIR}" && mkdir -p "${OW_IMG_DIR}" 
+cp -r "${OW_SPEC_BUILD_DIR}/bin/targets/${OW_TARGET}/${OW_SUBTARGET}/" "${OW_IMG_DIR}"
 
