@@ -1,4 +1,4 @@
-OW_PROFILE=xiaomi_mir3g
+OW_PROFILE=xiaomi_mi-router-3g
 OW_TARGET=ramips
 OW_SUBTARGET=mt7621
 OW_CPU_ARCH=mipsel

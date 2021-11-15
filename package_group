@@ -1,9 +1,9 @@
 
 OW_PKG_GROUP_base="
-ca-certificates
-ip
-libustream-openssl
+ip-full
 luci
+luci-theme-openwrt
+luci-theme-material
 sudo
 "
 
@@ -34,15 +34,13 @@ iptables-mod-conntrack-extra
 iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
+luci-app-https-dns-proxy
 luci-app-shadowsocks-libev
-luci-app-sqm
 shadowsocks-libev-ss-rules
 shadowsocks-libev-ss-tunnel
-shadowsocks-v2ray-plugin
-unbound-daemon
--wpad-basic
--wpad-mini
-wpad-openssl
+v2ray-plugin
+-wpad-basic-wolfssl
+wpad-mesh-wolfssl
 "
 
 OW_PKG_GROUP_hw="
@@ -74,5 +72,4 @@ htop
 lsblk
 lsof
 procps-ng
-wget
 "
