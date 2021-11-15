@@ -38,7 +38,7 @@ luci-app-https-dns-proxy
 luci-app-shadowsocks-libev
 shadowsocks-libev-ss-rules
 shadowsocks-libev-ss-tunnel
-v2ray-plugin
+shadowsocks-v2ray-plugin
 -wpad-basic-wolfssl
 wpad-mesh-wolfssl
 "

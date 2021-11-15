@@ -64,17 +64,15 @@ OK_FILE=${OW_SDK}.ok
 cd ${OW_SDK_DIR}
 rm -rf dl && mkdir -p "${OW_SRC_DIR}" && ln -s "${OW_SRC_DIR}" dl
 cp feeds.conf.default feeds.conf
-echo "src-git my https://github.com/honwen/openwrt-v2ray-plugin.git" >> feeds.conf
+echo "src-git my https://github.com/sunmix/openwrt-mypackages.git" >> feeds.conf
 ./scripts/feeds update -a || exit 1
-#./scripts/feeds install -p my shadowsocks-libev || exit 1
-./scripts/feeds install -p my v2ray-plugin || exit 1
+./scripts/feeds install -p my shadowsocks-v2ray-plugin || exit 1
 cat << 'EOF' > .config
 CONFIG_CCACHE=y
 # CONFIG_SIGNED_PACKAGES is not set
 EOF
 make defconfig || exit 1
-#make -j8 package/shadowsocks-libev/compile || exit 1
-make -j8 package/v2ray-plugin/compile || exit 1
+make -j8 package/shadowsocks-v2ray-plugin/compile || exit 1
 make package/index
 OW_REPOS_EXT+=("src my file://${OW_SDK_DIR}/bin/packages/${OW_CPU_ARCH}_${OW_CPU_TYPE}${OW_CPU_SUBTYPE:+"_${OW_CPU_SUBTYPE}"}/my")
 
