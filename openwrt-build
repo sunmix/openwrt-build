@@ -13,6 +13,7 @@ OW_PKG_EXT=()
 
 OW_CC="gcc-8.4.0"
 OW_DIR="$( cd `dirname "${BASH_SOURCE[0]}"` && pwd )"
+OW_PKGSRC_DIR="${OW_DIR}/pkg_src"
 OW_SPECS_DIR="${OW_DIR}/specs"
 OW_BUILD_DIR="${OW_DIR}/build"
 OW_SRC_DIR="${OW_BUILD_DIR}/_src_"
@@ -64,7 +65,7 @@ OK_FILE=${OW_SDK}.ok
 cd ${OW_SDK_DIR}
 rm -rf dl && mkdir -p "${OW_SRC_DIR}" && ln -s "${OW_SRC_DIR}" dl
 cp feeds.conf.default feeds.conf
-echo "src-git my https://github.com/sunmix/openwrt-mypackages.git" >> feeds.conf
+echo "src-link my ${OW_PKGSRC_DIR}" >> feeds.conf
 ./scripts/feeds update -a || exit 1
 ./scripts/feeds install -p my shadowsocks-v2ray-plugin || exit 1
 cat << 'EOF' > .config
