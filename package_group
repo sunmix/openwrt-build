@@ -2,7 +2,6 @@
 OW_PKG_GROUP_base="
 ip-full
 luci
-luci-theme-openwrt
 luci-theme-material
 sudo
 "
@@ -34,11 +33,11 @@ iptables-mod-conntrack-extra
 iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
-luci-app-https-dns-proxy
 luci-app-shadowsocks-libev
 shadowsocks-libev-ss-rules
 shadowsocks-libev-ss-tunnel
 shadowsocks-v2ray-plugin
+unbound-daemon
 -wpad-basic-wolfssl
 wpad-mesh-wolfssl
 "
