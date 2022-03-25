@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OW_VERSION="21.02.1"
+OW_VERSION="21.02.2"
 OW_PROFILE="xiaomi_mi-router-3g"
 OW_TARGET="ramips"
 OW_SUBTARGET="mt7621"
