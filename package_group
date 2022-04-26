@@ -34,6 +34,7 @@ iptables-mod-filter
 iptables-mod-tproxy
 iptables-mod-u32
 luci-app-shadowsocks-libev
+shadowsocks-libev-ss-local
 shadowsocks-libev-ss-rules
 shadowsocks-libev-ss-tunnel
 shadowsocks-v2ray-plugin
