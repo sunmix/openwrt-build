@@ -28,7 +28,6 @@ transmission-web
 OW_PKG_GROUP_router="
 -dnsmasq
 dnsmasq-full
-ipset
 luci-app-shadowsocks-libev
 shadowsocks-libev-ss-local
 shadowsocks-libev-ss-rules

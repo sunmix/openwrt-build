@@ -5,4 +5,4 @@ OW_CPU_ARCH=mipsel
 OW_CPU_TYPE=24kc
 OW_CPU_SUBTYPE=
 
-OW_PKG_GROUP=(base router util)
+OW_PKG_GROUP=(base router)
