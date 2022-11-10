@@ -36,6 +36,7 @@ shadowsocks-v2ray-plugin
 unbound-daemon
 -wpad-basic-wolfssl
 wpad-mesh-wolfssl
+mesh11sd
 "
 
 OW_PKG_GROUP_hw="
